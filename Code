@@ -1,0 +1,74 @@
+# Sistema de pedidos - Heladería Rapanui (Consola)
+
+def mostrar_menu(titulo, opciones):
+    print(f"\n{titulo}")
+    for i, opcion in enumerate(opciones, start=1):
+        print(f"{i}. {opcion}")
+
+def elegir_opcion(opciones):
+    while True:
+        try:
+            eleccion = int(input("Seleccione una opción: "))
+            if 1 <= eleccion <= len(opciones):
+                return opciones[eleccion - 1]
+            else:
+                print("Opción fuera de rango.")
+        except ValueError:
+            print("Ingrese un número válido.")
+
+def elegir_sabor():
+    sabores = ["Chocolate", "Vainilla", "Frutilla", "Dulce de leche"]
+    mostrar_menu("Sabores disponibles", sabores)
+    return elegir_opcion(sabores)
+
+def elegir_salsa():
+    salsas = ["Chocolate", "Caramelo", "Frutilla", "Sin salsa"]
+    mostrar_menu("Salsas disponibles", salsas)
+    return elegir_opcion(salsas)
+
+def elegir_topping():
+    toppings = ["Almendras", "Granola", "Chips de chocolate", "Sin topping"]
+    mostrar_menu("Toppings disponibles", toppings)
+    return elegir_opcion(toppings)
+
+def elegir_tamaño():
+    tamaños = {
+        "Chico": 2500,
+        "Mediano": 3500,
+        "Grande": 4500
+    }
+    mostrar_menu("Tamaños", list(tamaños.keys()))
+    tamaño = elegir_opcion(list(tamaños.keys()))
+    return tamaño, tamaños[tamaño]
+
+def calcular_precio(base, salsa, topping):
+    extra = 0
+    if salsa != "Sin salsa":
+        extra += 300
+    if topping != "Sin topping":
+        extra += 400
+    return base + extra
+
+def mostrar_ticket(sabor, salsa, topping, tamaño, total):
+    print("\n----- TICKET RAPANUI -----")
+    print(f"Sabor: {sabor}")
+    print(f"Salsa: {salsa}")
+    print(f"Topping: {topping}")
+    print(f"Tamaño: {tamaño}")
+    print(f"Total a pagar: ${total}")
+    print("--------------------------")
+
+def iniciar_pedido():
+    print("Bienvenido a Rapanui")
+
+    sabor = elegir_sabor()
+    salsa = elegir_salsa()
+    topping = elegir_topping()
+    tamaño, precio_base = elegir_tamaño()
+
+    total = calcular_precio(precio_base, salsa, topping)
+
+    mostrar_ticket(sabor, salsa, topping, tamaño, total)
+
+# Programa principal
+iniciar_pedido()
